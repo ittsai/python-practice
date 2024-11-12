@@ -5,7 +5,6 @@
 # process coins
 # check transaction successful
 # make coffee
-from operator import truediv
 
 from art import coffee_machine_logo
 
