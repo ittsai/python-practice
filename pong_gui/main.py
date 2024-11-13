@@ -15,6 +15,10 @@ screen.tracer(0)
 paddle1 = Player(350)
 paddle2 = Player(-350)
 ball = Ball()
+middle_line = Turtle("square")
+middle_line.color("green")
+middle_line.shapesize(stretch_len=0.5, stretch_wid=30)
+
 score_board = ScoreBoard()
 
 screen.listen()
