@@ -12,11 +12,10 @@ data = pandas.read_csv("50_states.csv")
 states = data.state.to_list()
 guessed_states = []
 
-
-answer = turtle.textinput(title=f"0/50 States correct", prompt="What's state's name?")
+answer = screen.textinput(title=f"0/50 States correct", prompt="What's state's name?")
 
 while len(guessed_states) < 50:
-    answer = turtle.textinput(title=f"{len(guessed_states)}/50 States correct", prompt="What's state's name?").title()
+    answer = screen.textinput(title=f"{len(guessed_states)}/50 States correct", prompt="What's state's name?").title()
 
     if answer == "Exit":
         missing_states = []
