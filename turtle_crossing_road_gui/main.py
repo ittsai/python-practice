@@ -1,9 +1,9 @@
 import time
 from turtle import Screen
 
-from turtle_crossing_road.car import Car
-from turtle_crossing_road.player import PlayerTurtle
-from turtle_crossing_road.scoreboard import ScoreBoard
+from turtle_crossing_road_gui.car import Car
+from turtle_crossing_road_gui.player import PlayerTurtle
+from turtle_crossing_road_gui.scoreboard import ScoreBoard
 
 screen = Screen()
 screen.bgcolor("white")
