@@ -20,6 +20,11 @@ french_words = pandas.read_csv("french_words.csv")
 to_learn =  french_words.to_dict(orient="records")
 
 
+def is_learn():
+    global to_learn
+    to_learn = to_learn.remove(current_card)
+    next_card()
+
 def next_card():
     global current_card, flip_timer
     window.after_cancel(flip_timer)
@@ -30,6 +35,7 @@ def next_card():
     canvas.itemconfig(word, text=f"{french}", fill="black")
     canvas.itemconfig(img, image=card_front_img)
     flip_timer = window.after(3000, func=flip_card)
+
 
 canvas = Canvas(width=800, height=526)
 card_front_img = PhotoImage(file="card_front.png")
@@ -44,7 +50,7 @@ cross_img = PhotoImage(file="wrong.png")
 check_img = PhotoImage(file="right.png")
 unknown_button = Button(image=cross_img, highlightthickness=0, command=next_card)
 unknown_button.grid(row=1, column=0)
-known_button = Button(image=check_img, highlightthickness=0, command=next_card)
+known_button = Button(image=check_img, highlightthickness=0, command=is_learn)
 known_button.grid(row=1, column=1)
 
 next_card()
