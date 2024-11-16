@@ -1,3 +1,4 @@
+import json
 import random
 from tkinter import *
 from tkinter import messagebox
@@ -41,21 +42,49 @@ def save_password():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
-
+    new_data = {website: {
+        "email": email,
+        "password": password
+    }}
     if len(website) == 0 or len(password) == 0:
         messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty")
     else:
         is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \n Email: {email}\n"
                                                               f"Password: {password}\n Is it ok to save?")
         if is_ok:
-            with open("data.text", "a") as data_file:
-                data_file.write(f"{website} | {email} | {password}\n")
+            try:
+                with open("data.json", "r") as data_file:
+                    data = json.load(data_file)
+            except FileNotFoundError:
+                with open("data.json", "w") as data_file:
+                    json.dump(new_data, data_file, indent=4)
+            else:
+                data.update(new_data)
+
+                with open("data.json", "w") as data_file:
+                    json.dump(data, data_file, indent=4)
+            finally:
                 website_entry.delete(0, END)
                 password_entry.delete(0, END)
 
+def search():
+    website = website_entry.get()
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
 
-website_entry = Entry(width=35)
-website_entry.grid(row=1, column=1, columnspan=2)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Oops", message="No data found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=f"{website}", message=f"Email: {email}\n Password: {password}")
+        else:
+            messagebox.showinfo(title="Oops", message="No data found")
+
+website_entry = Entry(width=21)
+website_entry.grid(row=1, column=1, sticky="e", padx=0)
 website_entry.focus()
 
 email_entry = Entry(width=35)
@@ -64,6 +93,8 @@ email_entry.insert(0, "test@gmail.com")
 password_entry = Entry(width=21)
 password_entry.grid(row=3, column=1, sticky="e", padx=0)
 
+search_button = Button(text="Search", width=10, command=search)
+search_button.grid(row=1, column= 2, padx=0)
 generate_password_button = Button(text="Generate Password", command=generate_password, width=11)
 generate_password_button.grid(row=3, column=2, padx=0)
 add_button = Button(text="Add", width=33, command=save_password)
