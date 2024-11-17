@@ -10,6 +10,7 @@ class QuizInterface:
 
     def __init__(self, questions):
         self.question_data = questions
+        self.score =0
         self.data = {}
         self.window = Tk()
         self.window.title("Quiz")
@@ -35,7 +36,7 @@ class QuizInterface:
         self.window.mainloop()
 
     def get_question(self):
-        self.canvas.config(bg=THEME_COLOR)
+        self.canvas.config(bg="white")
         if len(self.question_data) > 0:
             self.data = random.choice(self.question_data)
             self.question_data.remove(self.data)
@@ -50,6 +51,7 @@ class QuizInterface:
         correct_answer = self.data["correct_answer"]
         if correct_answer == "True":
             self.canvas.config(bg="green")
+            self.get_score()
         else:
             self.canvas.config(bg="red")
         self.window.after(1000, self.get_question)
@@ -61,6 +63,7 @@ class QuizInterface:
         correct_answer = self.data["correct_answer"]
         if correct_answer == "False":
             self.canvas.config(bg="green")
+            self.get_score()
         else:
             self.canvas.config(bg="red")
         self.window.after(1000, self.get_question)
@@ -74,4 +77,6 @@ class QuizInterface:
         self.true_button.config(state="active")
         self.false_button.config(state="active")
 
-
+    def get_score(self):
+        self.score += 1
+        self.label.config(text=f"Score {self.score}")
