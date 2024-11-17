@@ -1,4 +1,7 @@
 # web scraping, beautiful soup
+# import os (os.environ[""])
+# from dotenv import load_dotenv (load .env file)
+
 from bs4 import BeautifulSoup
 import requests
 STATIC_WEBSITE = "https://appbrewery.github.io/news.ycombinator.com/"
