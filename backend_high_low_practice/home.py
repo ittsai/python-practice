@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, template_rendered
 import random
 
 app = Flask(__name__)
