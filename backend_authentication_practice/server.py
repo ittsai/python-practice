@@ -55,9 +55,9 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        result = db.session.execute(db.select(User).where(User.username == username and User.password == password))
+        result = db.session.execute(db.select(User).where(User.username == username))
         user = result.scalar()
-        if not user:
+        if not user or check_password_hash(user.password, password):
             flash("Wrong username or password", "error")
             return redirect(url_for("login"))
         else:
@@ -74,13 +74,15 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+
         result = db.session.execute(db.select(User).where(User.username == username))
         user = result.scalar()
         if user:
             flash("Already registered", "error")
             return redirect(url_for("login"))
         else:
-            new_user = User(username=username, password=password)
+            hash_password = generate_password_hash(password, method="pbkdf2:sha256", salt_length=8)
+            new_user = User(username=username, password=hash_password)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
