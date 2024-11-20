@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="box">
+  <h1>Login</h1>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <p>{{message}}</p>
+  {%endfor%}
+  {%endif%}
+  {%endwith%}
+  <div>
+      <form method="POST" action="{{url_for('login')}}" novalidate>
+
+    {{form.csrf_token}}
+    {{form.username.label(class="label")}} {{form.username(size=30)}}
+    {% for error in form.username.errors %}
+    <div style="color:red">{{error}}</div>
+    {% endfor %}
+    {{form.password.label(class="label")}} {{form.password(size=30)}}
+    {% for error in form.password.errors %}
+    <div style="color:red">{{error}}</div>
+    {% endfor %}
+    {{form.submit(class="btn btn-primary btn-block btn-large")}}
+  </form>
+  </div>
+</div>
+
+{% endblock %}
