@@ -18,7 +18,8 @@ window = gui.Window("My To-Do App",
                             [input_box, add_button],
                             [list_box, edit_button, complete_button],
                             [exit_button]],
-                            font=('Helvetica', 20))
+                    font=('Helvetica', 20),
+                    disable_close=True)
 while True:
     event, values = window.read(timeout=200)
     window["clock"].update(value=time.strftime("%b %d, %Y %H:%M:%S"))
