@@ -10,3 +10,4 @@ with st.form(key="email_form"):
 
     if button:
         send_email()
+        st.info("Send email")
